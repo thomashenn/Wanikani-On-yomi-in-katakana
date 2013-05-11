@@ -47,14 +47,12 @@ else if(/review\/session/.test(document.URL) ) //reviews
     
     var WhenAnswer = function() 
     {
-       // alert("help detected!");
        	var AskedItem = document.getElementById('character');
    		if(AskedItem.className == 'kanji')//if it is a kanji
         {
             var AskedInfo = document.getElementById('readings');
             if(AskedInfo.getElementsByTagName("h3")[0].innerHTML=="Important Readings (On'yomi)")
             {
-               // alert("it's on'yomi!");
                 AskedInfo.getElementsByTagName("p")[0].innerHTML = ConvertChain(AskedInfo.getElementsByTagName("p")[0].innerHTML);
             }
                 
@@ -102,7 +100,7 @@ else if(/\/kanji\?difficult/.test(document.URL) ||document.URL== "http://www.wan
     var firstLevelOnPage = parseInt( /[0-9]+/.exec(document.getElementsByClassName('page-list')[0].getElementsByTagName("a")[0].innerHTML));
     var kanjiBloc = document.getElementsByClassName('single-character-grid');
     for (var level = firstLevelOnPage; level <= firstLevelOnPage+9; level++) 
-    { //alert(level-1);
+    {
 		var bloc = kanjiBloc[level-firstLevelOnPage].getElementsByClassName("character-item");
        
 		for (var i = 0, c = bloc.length; i < c; i++) 
