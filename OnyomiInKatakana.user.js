@@ -16,6 +16,8 @@ var katakana = "アイウエオカキクケコサシスセソタチツテトナ�
 
 if(/\/lattice\//.test(document.URL)) //lattice
 {
+function DealWhithLatticeLater()
+{
     var kanjiBloc = document.getElementsByClassName('lattice-single-character')[0].getElementsByTagName("a");
     for (var i = 0, c = kanjiBloc.length; i < c; i++) 
     {
@@ -26,7 +28,8 @@ if(/\/lattice\//.test(document.URL)) //lattice
        		kanjiBloc[i].setAttribute('data-original-title',ConvertChain(chain));
     	}
     }
-    
+}
+setTimeout(DealWhithLatticeLater,1000); //Quick fix to wait for ajax? to put the data-original-title    
 }
 else if( /\/kanji\//.test(document.URL) ) //kanji info pages
 {
@@ -81,6 +84,9 @@ else if(/\/level\//.test(document.URL)) //level page
 }
 else if(/dashboard/.test(document.URL) || document.URL== "http://www.wanikani.com/") //Homepage
 {
+
+function DealWhithDashboardLater()
+{
     var level = /[0-9]+/.exec(document.getElementsByClassName('kanji-progress')[0].getElementsByTagName("h3")[0].innerHTML);
     var kanjiBloc = document.getElementsByClassName('kanji-progress')[0].getElementsByTagName("a");
     
@@ -93,7 +99,8 @@ else if(/dashboard/.test(document.URL) || document.URL== "http://www.wanikani.co
        		kanjiBloc[i].setAttribute('data-original-title',ConvertChain(chain));
     	}
     }
-    
+}
+setTimeout(DealWhithDashboardLater,1000); //Quick fix to wait for ajax? to put the data-original-title
 }
 else if(/\/kanji\?difficult/.test(document.URL) ||document.URL== "http://www.wanikani.com/kanji") //big kanji pages
 {
