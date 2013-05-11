@@ -4,8 +4,8 @@
 // @description Transforms any On'yomi reading in katakana on Wanikani
 // @include     http://www.wanikani.com/*
 // @version    0.5
-// @run-at		document-end
-// @updateURL	
+// @run-at document-end
+// @updateURL http://userscripts.org/scripts/source/167274.user.js
 // ==/UserScript==
 
 
