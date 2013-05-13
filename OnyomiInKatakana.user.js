@@ -3,13 +3,14 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading in katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    0.6
+// @version    0.9
 // @run-at document-end
 // @updateURL http://userscripts.org/scripts/source/167274.user.js
 // @require		http://code.jquery.com/jquery-1.9.1.min.js
+// @grant GM_log
 // ==/UserScript==
 
-//console.info("test");
+
 
 
 var maxLevel=38;
@@ -36,7 +37,7 @@ if(/\/lattice\//.test(document.URL)) //lattice
 }
 else if( /\/kanji\//.test(document.URL) ) //kanji info pages
 {
-    $('.span6').each(findOnyomi);
+    
     function findOnyomi()
     {
         if($(this).children('h3').text()=="On'yomi")
@@ -44,6 +45,7 @@ else if( /\/kanji\//.test(document.URL) ) //kanji info pages
             $(this).children('p').text(ConvertChain($(this).children('p').text())) ;
         }
     }
+    $('.span6').each(findOnyomi);
     
 }
 else if(/review\/session/.test(document.URL) ) //reviews
@@ -63,7 +65,7 @@ else if(/\/level\//.test(document.URL)) //level page
 {
   var level = /[0-9]+/.exec($('h1').eq(0).text() ); //get current level to minimize the number of kanji to lookup
     
-    $('.single-character-grid').eq(1).find('a').each(DealWithKanji);
+
     function DealWithKanji()
     {
         if (IsOnyomi($(this).children('.character').text(),level))
@@ -71,7 +73,7 @@ else if(/\/level\//.test(document.URL)) //level page
         	$(this).find('li').eq(0).text( ConvertChain( $(this).find('li').eq(0).text() ) );
         }
     }
-    
+    $('.single-character-grid').eq(1).find('a').each(DealWithKanji);    
 }
 else if(/dashboard/.test(document.URL) || document.URL== "http://www.wanikani.com/") //Homepage
 {
@@ -97,7 +99,7 @@ else if(/\/kanji\?difficult/.test(document.URL) ||document.URL== "http://www.wan
 {
     //var firstLevelOnPage = parseInt( /[0-9]+/.exec($('.page-list').eq(0).find('a').text() ) );
     
-    $('.single-character-grid').each(DealWithLevel);
+
     function DealWithLevel()
     {
         $(this).find('.character-item').each(DealWithKanji);
@@ -111,7 +113,7 @@ else if(/\/kanji\?difficult/.test(document.URL) ||document.URL== "http://www.wan
         }
     }
         
-    
+    $('.single-character-grid').each(DealWithLevel);    
 
 }
 else{}
