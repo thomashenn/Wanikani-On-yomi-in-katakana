@@ -5,7 +5,8 @@
 // @include     http://www.wanikani.com/*
 // @version    0.9
 // @run-at document-end
-// @updateURL http://userscripts.org/scripts/source/167274.user.js
+// @updateURL https://userscripts.org/scripts/source/167274.user.js
+// @downloadURL https://userscripts.org/scripts/source/167274.user.js
 // @require		http://code.jquery.com/jquery-1.9.1.min.js
 // @grant GM_log
 // ==/UserScript==
