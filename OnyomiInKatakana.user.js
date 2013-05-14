@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading in katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    0.9
+// @version    1.0
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
@@ -19,160 +19,194 @@ var KanjiList = [[],[["下",1],["力",1],["七",1],["入",1],["二",1],["三",1]
 var hiragana = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽゃゅょっ";
 var katakana = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダジズデドバビブベボパピプペポャュョー";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
-if(/\/lattice\//.test(document.URL)) //lattice
+if (/\/lattice\//.test(document.URL)) //lattice
 {
-	function DealWithLatticeLater(Node)
-	{
-        	Node.each(DealWithKanji)
-            function DealWithKanji()
-        	{
-                if(IsOnyomi( $(this).text() ,0) )
-                {
-                $(this).attr( 'data-original-title',ConvertChain( $(this).attr('data-original-title') ) );
-                }
-        	}
+    function DealWithLatticeLater(Node)
+    {
+        Node.each(DealWithKanji);
+
+        function DealWithKanji()
+        {
+            if (IsOnyomi($(this).text(), 0))
+            {
+                $(this).attr('data-original-title', ConvertChain($(this).attr('data-original-title')));
+            }
+        }
     }
-    
-    waitForKeyElements(".lattice-single-character a[data-original-title]",DealWithLatticeLater,false);
+
+    waitForKeyElements(".lattice-single-character a[data-original-title]", DealWithLatticeLater, false);
 
 }
-else if( /\/kanji\//.test(document.URL) ) //kanji info pages
+else if (/quickview\/kanji\//.test(document.URL)) //mini lesson info
 {
-    
+    if ($('.kana-inline').find('li').eq(0).children('h3').text() == "On'yomi")
+    {
+        $('.kana-inline').find('li').eq(0).children('span').text(ConvertChain($('.kana-inline').find('li').eq(0).children('span').text()));
+    }
+}
+else if (/\/kanji\//.test(document.URL)) //kanji info pages
+{
+
     function findOnyomi()
     {
-        if($(this).children('h3').text()=="On'yomi")
+        if ($(this).children('h3').text() == "On'yomi")
         {
-            $(this).children('p').text(ConvertChain($(this).children('p').text())) ;
+            $(this).children('p').text(ConvertChain($(this).children('p').text()));
         }
     }
     $('.span6').each(findOnyomi);
-    
-}
-else if(/review\/session/.test(document.URL) ) //reviews
-{
-	function WhenAnswer()
-	{
-       if ($('#readings').children('h3').text() == "Important Readings (On'yomi)" )
-   		 {
-    	$('#readings').children('p').text(ConvertChain($('#readings').children('p').text()));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-	}
-	$('#option-item-info').click(WhenAnswer);
-	$(document).keydown(function(key){var letter = key.which || key.keyCode; if(letter == 70){ WhenAnswer();}});
 
 }
-else if(/\/level\//.test(document.URL)) //level page
+else if (/review\/session/.test(document.URL)) //reviews
 {
-  var level = /[0-9]+/.exec($('h1').eq(0).text() ); //get current level to minimize the number of kanji to lookup
-    
+    function WhenAnswer()
+    {
+        if ($('#readings').children('h3').text() == "Important Readings (On'yomi)")
+        {
+            $('#readings').children('p').text(ConvertChain($('#readings').children('p').text()));
+        }
+    }
+    $('#option-item-info').click(WhenAnswer);
+    $(document).keydown(function (key)
+    {
+        var letter = key.which || key.keyCode;
+        if (letter == 70)
+        {
+            WhenAnswer();
+        }
+    });
+
+}
+else if (/\/level\//.test(document.URL)) //level page
+{
+    var level = /[0-9]+/.exec($('h1').eq(0).text()); //get current level to minimize the number of kanji to lookup
+
 
     function DealWithKanji()
     {
-        if (IsOnyomi($(this).children('.character').text(),level))
-        { 
-        	$(this).find('li').eq(0).text( ConvertChain( $(this).find('li').eq(0).text() ) );
+        if (IsOnyomi($(this).children('.character').text(), level))
+        {
+            $(this).find('li').eq(0).text(ConvertChain($(this).find('li').eq(0).text()));
         }
     }
-    $('.single-character-grid').eq(1).find('a').each(DealWithKanji);    
+    $('.single-character-grid').eq(1).find('a').each(DealWithKanji);
 }
-else if(/dashboard/.test(document.URL) || document.URL== "http://www.wanikani.com/") //Homepage
+else if (/dashboard/.test(document.URL) || document.URL == "http://www.wanikani.com/") //Homepage
 {
-    var level = /[0-9]+/.exec($('.kanji-progress').children('h3').text() ); //get current level to minimize the number of kanji to lookup
+    var level = /[0-9]+/.exec($('.kanji-progress').children('h3').text()); //get current level to minimize the number of kanji to lookup
+
     function DealWithDashboardLater(Node)
     {
-        	Node.each(DealWithKanji)
-            function DealWithKanji()
-        	{
-                if(IsOnyomi( $(this).text() ,level) )
-                {
-                $(this).attr( 'data-original-title',ConvertChain( $(this).attr('data-original-title') ) );
-                }
-        	}
+        Node.each(DealWithKanji)
+
+        function DealWithKanji()
+        {
+            if (IsOnyomi($(this).text(), level))
+            {
+                $(this).attr('data-original-title', ConvertChain($(this).attr('data-original-title')));
+            }
+        }
     }
-    
-    waitForKeyElements(".kanji-progress a[data-original-title]",DealWithDashboardLater,false);
-    
-    
-    
+
+    waitForKeyElements(".kanji-progress a[data-original-title]", DealWithDashboardLater, false);
+
+
+
 }
-else if(/\/kanji\?difficult/.test(document.URL) ||document.URL== "http://www.wanikani.com/kanji") //big kanji pages
+else if (/\/kanji\?difficult/.test(document.URL) || document.URL == "http://www.wanikani.com/kanji") //big kanji pages
 {
     //var firstLevelOnPage = parseInt( /[0-9]+/.exec($('.page-list').eq(0).find('a').text() ) );
-    
+
 
     function DealWithLevel()
     {
         $(this).find('.character-item').each(DealWithKanji);
     }
-    
+
     function DealWithKanji()
     {
-        if (IsOnyomi($(this).find('.character').text(),0))
-        { 
-        	$(this).find('li').eq(0).text( ConvertChain( $(this).find('li').eq(0).text() ) );
+        if (IsOnyomi($(this).find('.character').text(), 0))
+        {
+            $(this).find('li').eq(0).text(ConvertChain($(this).find('li').eq(0).text()));
         }
     }
-        
-    $('.single-character-grid').each(DealWithLevel);    
+
+    $('.single-character-grid').each(DealWithLevel);
 
 }
-else{}
-
-
-
-function IsOnyomi(kanji,level) //level =0 -> all levels
+else if (/\/lesson/.test(document.URL)) //lesson
 {
-    if(level !=0)
+    function WhenNewLesson()
     {
-	for (var i = 0, c = KanjiList[level].length; i < c; i++) 
-    {
-        if (kanji == KanjiList[level][i][0])
+        if ($('#slide-3').find('i').eq(0).text() == "on'yomi reading")
         {
-            return KanjiList[level][i][1];//return 1 if onyomi or 0 if kunyomi
+            $('#slide-3').find('b').text(ConvertChain($('#slide-3').find('b').text()));
         }
+        setTimeout(WhenNewLesson, 5000);
     }
+    setTimeout(WhenNewLesson, 5000);
+}
+else
+{}
+
+
+
+function IsOnyomi(kanji, level) //level =0 -> all levels
+{
+    if (level != 0)
+    {
+        for (var i = 0, c = KanjiList[level].length; i < c; i++)
+        {
+            if (kanji == KanjiList[level][i][0])
+            {
+                return KanjiList[level][i][1]; //return 1 if onyomi or 0 if kunyomi
+            }
+        }
     }
     else
     {
         for (var LEVEL = 1; LEVEL <= maxLevel; LEVEL++)
         {
-        	for (var i = 0, c = KanjiList[LEVEL].length; i < c; i++) 
-   			{
-        	if (kanji == KanjiList[LEVEL][i][0])
-     	    {
-            		return KanjiList[LEVEL][i][1];//return 1 if onyomi or 0 if kunyomi
-        	}
-   			}
+            for (var i = 0, c = KanjiList[LEVEL].length; i < c; i++)
+            {
+                if (kanji == KanjiList[LEVEL][i][0])
+                {
+                    return KanjiList[LEVEL][i][1]; //return 1 if onyomi or 0 if kunyomi
+                }
+            }
         }
     }
-    	return false;
-    
+    return false;
+
 }
 
 function ConvertChain(chain)
+{
+    for (var i = 0, c = chain.length; i < c; i++)
     {
-        for (var i = 0, c = chain.length; i < c; i++) 
-        {
-			chain = replaceAt(chain,i,ConvertHiraganaToKatakana(chain[i]));
-    	}
-        return chain;
+        chain = replaceAt(chain, i, ConvertHiraganaToKatakana(chain[i]));
     }
+    return chain;
+}
 
 
 function ConvertHiraganaToKatakana(carac)
-    {
+{
 
-        for (var i = 0, c = hiragana.length; i < c; i++) 
-        	{
-				if (carac==hiragana[i]) {return katakana[i];}
-    		}
-        
-		return carac;
+    for (var i = 0, c = hiragana.length; i < c; i++)
+    {
+        if (carac == hiragana[i])
+        {
+            return katakana[i];
+        }
     }
 
+    return carac;
+}
 
-function replaceAt(s, n, t) {
+
+function replaceAt(s, n, t)
+{
     return s.substring(0, n) + t + s.substring(n + 1);
 }
 
@@ -195,81 +229,91 @@ function replaceAt(s, n, t) {
  
     IMPORTANT: This function requires your script to have loaded jQuery.
 */
-function waitForKeyElements (
-    selectorTxt,    /* Required: The jQuery selector string that
+
+function waitForKeyElements(
+    selectorTxt,
+/* Required: The jQuery selector string that
                         specifies the desired element(s).
                     */
-    actionFunction, /* Required: The code to run when elements are
+actionFunction,
+/* Required: The code to run when elements are
                         found. It is passed a jNode to the matched
                         element.
                     */
-    bWaitOnce,      /* Optional: If false, will continue to scan for
+bWaitOnce,
+/* Optional: If false, will continue to scan for
                         new elements even after the first match is
                         found.
                     */
-    iframeSelector  /* Optional: If set, identifies the iframe to
+iframeSelector
+/* Optional: If set, identifies the iframe to
                         search.
                     */
-) {
+)
+{
     var targetNodes, btargetsFound;
- 
+
     if (typeof iframeSelector == "undefined")
-        targetNodes     = $(selectorTxt);
+        targetNodes = $(selectorTxt);
     else
-        targetNodes     = $(iframeSelector).contents ()
-                                           .find (selectorTxt);
- 
-    if (targetNodes  &&  targetNodes.length > 0) {
-        btargetsFound   = true;
+        targetNodes = $(iframeSelector).contents()
+            .find(selectorTxt);
+
+    if (targetNodes && targetNodes.length > 0)
+    {
+        btargetsFound = true;
         /*--- Found target node(s).  Go through each and act if they
             are new.
         */
-        targetNodes.each ( function () {
-            var jThis        = $(this);
-            var alreadyFound = jThis.data ('alreadyFound')  ||  false;
- 
-            if (!alreadyFound) {
+        targetNodes.each(function ()
+        {
+            var jThis = $(this);
+            var alreadyFound = jThis.data('alreadyFound') || false;
+
+            if (!alreadyFound)
+            {
                 //--- Call the payload function.
-                var cancelFound     = actionFunction (jThis);
+                var cancelFound = actionFunction(jThis);
                 if (cancelFound)
-                    btargetsFound   = false;
+                    btargetsFound = false;
                 else
-                    jThis.data ('alreadyFound', true);
+                    jThis.data('alreadyFound', true);
             }
-        } );
+        });
     }
-    else {
-        btargetsFound   = false;
+    else
+    {
+        btargetsFound = false;
     }
- 
+
     //--- Get the timer-control variable for this selector.
-    var controlObj      = waitForKeyElements.controlObj  ||  {};
-    var controlKey      = selectorTxt.replace (/[^\w]/g, "_");
-    var timeControl     = controlObj [controlKey];
- 
+    var controlObj = waitForKeyElements.controlObj ||
+    {};
+    var controlKey = selectorTxt.replace(/[^\w]/g, "_");
+    var timeControl = controlObj[controlKey];
+
     //--- Now set or clear the timer as appropriate.
-    if (btargetsFound  &&  bWaitOnce  &&  timeControl) {
+    if (btargetsFound && bWaitOnce && timeControl)
+    {
         //--- The only condition where we need to clear the timer.
-        clearInterval (timeControl);
-        delete controlObj [controlKey]
+        clearInterval(timeControl);
+        delete controlObj[controlKey]
     }
-    else {
+    else
+    {
         //--- Set a timer, if needed.
-        if ( ! timeControl) {
-            timeControl = setInterval ( function () {
-                    waitForKeyElements (    selectorTxt,
-                                            actionFunction,
-                                            bWaitOnce,
-                                            iframeSelector
-                                        );
-                },
-                300
-            );
-            controlObj [controlKey] = timeControl;
+        if (!timeControl)
+        {
+            timeControl = setInterval(function ()
+            {
+                waitForKeyElements(selectorTxt,
+                    actionFunction,
+                    bWaitOnce,
+                    iframeSelector);
+            },
+                300);
+            controlObj[controlKey] = timeControl;
         }
     }
-    waitForKeyElements.controlObj   = controlObj;
+    waitForKeyElements.controlObj = controlObj;
 }
-
-    
-
