@@ -1,4 +1,4 @@
 Wanikani-On-yomi-in-katakana
 ============================
 
-Transforms any On'yomi reading in katakana on Wanikani
+Transforms any On'yomi reading into katakana on Wanikani
