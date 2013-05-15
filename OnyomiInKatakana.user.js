@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading into katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    1.0
+// @version    1.1
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
