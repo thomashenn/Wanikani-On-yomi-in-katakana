@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading into katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    1.7
+// @version    1.71
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
@@ -83,6 +83,17 @@ else if (/review/.test(document.URL)) //reviews
     });
 
 }
+else if (/\/radicals\//.test(document.URL)) //radical page
+{
+    function DealWithKanji()
+    {
+        if (IsOnyomi($(this).children('.character').text(), 0))
+        {
+            $(this).find('li').eq(0).text(ConvertChain($(this).find('li').eq(0).text()));
+        }
+    }
+    $('.single-character-grid').eq(0).find('a').each(DealWithKanji);
+}
 else if (/\/level\//.test(document.URL)) //level page
 {
     var level = /[0-9]+/.exec($('h1').eq(0).text()); //get current level to minimize the number of kanji to lookup
@@ -96,17 +107,6 @@ else if (/\/level\//.test(document.URL)) //level page
         }
     }
     $('.single-character-grid').eq(1).find('a').each(DealWithKanji);
-}
-else if (/\/radicals\//.test(document.URL)) //radical page
-{
-    function DealWithKanji()
-    {
-        if (IsOnyomi($(this).children('.character').text(), 0))
-        {
-            $(this).find('li').eq(0).text(ConvertChain($(this).find('li').eq(0).text()));
-        }
-    }
-    $('.single-character-grid').eq(0).find('a').each(DealWithKanji);
 }
 else if (/dashboard/.test(document.URL) || document.URL == "http://www.wanikani.com/") //Homepage
 {
