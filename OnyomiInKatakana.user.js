@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading into katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    1.8.1
+// @version    1.9.0
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
@@ -92,7 +92,7 @@ else if (/review/.test(document.URL)) //reviews
     });
 
 }
-else if (/\/radicals\//.test(document.URL)) //radical page
+else if (/\/radicals\//.test(document.URL) || /\/vocabulary\//.test(document.URL)) //radical and vocabulary pages
 {
     function DealWithKanji()
     {
