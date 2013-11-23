@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any onyomi reading into katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    2.0.0
+// @version    2.0.1
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
@@ -161,7 +161,7 @@ else if (/\/lesson/.test(document.URL)) //lesson
         }
     }
 
-    function WhenLookingForAnswer()
+    function WhenLookingForAnswerInLessonTest()
     {
         if($("#quiz").attr("style") != "display: None;")
         {
@@ -169,13 +169,13 @@ else if (/\/lesson/.test(document.URL)) //lesson
         }
     }
 
-    $('#option-item-info').click(WhenLookingForAnswer);
+    $('#option-item-info').click(WhenLookingForAnswerInLessonTest);
     $(document).keydown(function (key)
     {
         var letter = key.which || key.keyCode;
         if (letter == 70)
         {
-            WhenLookingForAnswer();
+            WhenLookingForAnswerInLessonTest();
         }
     });
 //----------------------------------------------------------
