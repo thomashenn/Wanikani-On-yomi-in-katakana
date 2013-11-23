@@ -3,7 +3,7 @@
 // @namespace thenn42.eu/userscripts
 // @description Transforms any On'yomi reading into katakana on Wanikani
 // @include     http://www.wanikani.com/*
-// @version    1.9.1
+// @version    2.0.0
 // @run-at document-end
 // @updateURL https://userscripts.org/scripts/source/167274.user.js
 // @downloadURL https://userscripts.org/scripts/source/167274.user.js
@@ -36,13 +36,6 @@ if (/\/lattice\//.test(document.URL)) //lattice
 
     waitForKeyElements(".lattice-single-character a[data-original-title]", DealWithLatticeLater, false);
 
-}
-else if (/quickview\/kanji\//.test(document.URL)) //mini lesson info
-{
-    if ($('.kana-inline').find('li').eq(0).children('h3').text() == "On'yomi")
-    {
-        $('.kana-inline').find('li').eq(0).children('span').text(ConvertChain($('.kana-inline').find('li').eq(0).children('span').text()));
-    }
 }
 else if (/\/kanji\//.test(document.URL)) //kanji info pages
 {
@@ -162,15 +155,62 @@ else if (/\/kanji\?difficult/.test(document.URL) || document.URL == "http://www.
 }
 else if (/\/lesson/.test(document.URL)) //lesson
 {
-    function WhenNewLesson()
+
+//Test part of lessons---------------------------------
+
+    function WhenAnswerInLessonTest(Node)
     {
-        if ($('#slide-3').find('i').eq(0).text() == "on'yomi reading")
+        if (Node.children('h2').text() == "Important Readings (onyomi)")
         {
-            $('#slide-3').find('b').text(ConvertChain($('#slide-3').find('b').text()));
+            Node.text(ConvertChain(Node.contents(':not(h2)').text()));
+            Node.prepend("<h2>Important Readings (onyomi)<\/h2>");
         }
-        setTimeout(WhenNewLesson, 5000);
     }
-    setTimeout(WhenNewLesson, 5000);
+
+    function WhenLookingForAnswer()
+    {
+        if($("#quiz").attr("style") != "display: None;")
+        {
+            waitForKeyElements("#item-info-reading", WhenAnswerInLessonTest, false);
+        }
+    }
+
+    $('#option-item-info').click(WhenLookingForAnswer);
+    $(document).keydown(function (key)
+    {
+        var letter = key.which || key.keyCode;
+        if (letter == 70)
+        {
+            WhenLookingForAnswer();
+        }
+    });
+//----------------------------------------------------------
+
+//Lesson part ----------------------------------------------
+    function WhenLessonSlides()
+    {
+        if($("#lesson").attr("style") != "display: None;")
+        {
+            Node = $("#supplement-kan-reading-type");
+            if(Node.text() == "onyomi")
+            {
+                var reading = Node.closest("div").children("div")
+                reading.text(ConvertChain(reading.text()));
+            }
+        }
+    }
+
+    $('#batch-items').click(WhenLessonSlides);
+    $(document).keydown(function (key)
+    {
+        var letter = key.which || key.keyCode;
+        if (letter == 87 || letter == 68 || letter == 37 || letter == 39 || letter == 13)
+        {
+            console.log("keey");
+            WhenLessonSlides();
+        }
+    });
+//-----------------------------------------------------------------
 }
 else
 {}
