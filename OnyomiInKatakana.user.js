@@ -6,8 +6,8 @@
 // @include     http://www.wanikani.com/*
 // @version    2.1.4
 // @run-at document-end
-// @updateURL https://userscripts.org/scripts/source/167274.user.js
-// @downloadURL https://userscripts.org/scripts/source/167274.user.js
+// @updateURL https://greasyfork.org/scripts/747-wanikani-on-yomi-in-katakana/code/Wanikani%20On'yomi%20in%20katakana.user.js
+// @downloadURL https://greasyfork.org/scripts/747-wanikani-on-yomi-in-katakana/code/Wanikani%20On'yomi%20in%20katakana.user.js
 // @require     http://code.jquery.com/jquery-1.9.1.min.js
 // @grant GM_log
 // ==/UserScript==
