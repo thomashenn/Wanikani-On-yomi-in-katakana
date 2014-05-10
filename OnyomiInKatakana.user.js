@@ -4,7 +4,7 @@
 // @description Transforms any onyomi reading into katakana on Wanikani
 // @include     https://www.wanikani.com/*
 // @include     http://www.wanikani.com/*
-// @version    2.1.4
+// @version    2.1.5
 // @run-at document-end
 // @updateURL https://greasyfork.org/scripts/747-wanikani-on-yomi-in-katakana/code/Wanikani%20On'yomi%20in%20katakana.user.js
 // @downloadURL https://greasyfork.org/scripts/747-wanikani-on-yomi-in-katakana/code/Wanikani%20On'yomi%20in%20katakana.user.js
